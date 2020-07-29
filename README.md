@@ -4,6 +4,6 @@ Set up for personal Linode server
 
 ## Usage
 
-1. Rename `config.example.tfvars` to `config.tfvars`
+1. Rename `terraform.example.tfvars` to `terraform.tfvars`
 2. Fill in Linode token
-3. Plan and apply: `terraform plan -var-file config.tfvars` && `terraform apply -var-file config.tfvars`
+3. Plan and apply: `terraform plan` && `terraform apply`
