@@ -1,17 +1,19 @@
-resource "linode_sshkey" "my_key" {
-    label = "my-key"
-    ssh_key = chomp(file("~/.ssh/id_rsa.pub"))
+resource "linode_sshkey" "vps" {
+    label = "vps"
+    ssh_key = chomp(file("./vps.pub"))
 }
 
-resource "linode_instance" "my-instance" {
-    label = "my-instance"
+resource "linode_instance" "vps" {
+    label = "vps"
     image = "linode/debian10"
-    region = "eu-central" # london
+    region = "eu-central" # London
     type = "g6-nanode-1"
-    authorized_keys = ["${linode_sshkey.my_key.ssh_key}"]
+    authorized_keys = [linode_sshkey.vps.ssh_key] # For root account
 
     #root_pass = ""
     #private_ip = ""
+
+    # TODO: Enable backups
 
     tags = ["personal"]
 }
