@@ -19,3 +19,6 @@ setup: key ip
 
 ip:
 	curl -sS -H "Authorization: Bearer ${LINODE_TOKEN}" https://api.linode.com/v4/linode/instances | jq --raw-output '.data[0].ipv4[0]' > ansible/hosts.ini
+
+customize: ip
+	ansible-playbook ansible/playbook.customization.yml

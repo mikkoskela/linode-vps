@@ -16,8 +16,6 @@
       vars:
         public_key: "~/.ssh/linode-vps.pub"
   post_tasks:
-    - debug:
-        msg: Rebooting the machine
     - name: reboot the machine
       shell: "sleep 5 && reboot"
       async: 1
@@ -27,7 +25,7 @@
         connect_timeout: 15
         sleep: 5
         delay: 5
-        timeout: 180
+        timeout: 90
       remote_user: "{{ user.name }}"
     - debug:
-        msg: "Setup done. Root SSH login has been disabled, use user {{ user.name }} instead."
+        msg: "Setup done. Root SSH login has been disabled, use {{ user.name }}@{{ ansible_host }} when connecting."
