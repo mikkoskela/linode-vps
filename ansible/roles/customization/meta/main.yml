@@ -1,0 +1,7 @@
+galaxy_info:
+  author: Mikko Koskela
+  description: Customize VM with software and dotfiles
+  min_ansible_version: 2.9
+
+dependencies: []
+  

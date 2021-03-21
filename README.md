@@ -36,3 +36,11 @@ Run:
 make setup
 ```
 
+**5. Apply customization**
+
+Run:
+
+```sh
+ansible-playbook ansible/playbook.customization.yml
+```
+

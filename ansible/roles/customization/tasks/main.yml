@@ -1,0 +1,28 @@
+---
+# tasks file for customization
+- name: update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+- name: install base software
+  apt:
+    name:
+    - whois
+    - nmap
+    - zsh
+    - ansible
+    - shellcheck
+    - tree
+    - htop
+    - tmux
+    - ripgrep
+    - fd-find
+    - jq
+    - unzip
+    - vim
+    - git
+    - curl
+    - wget
+    - openssl
+    - openvpn
+    state: present
