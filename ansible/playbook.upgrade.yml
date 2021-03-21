@@ -1,0 +1,22 @@
+---
+- hosts: all
+  gather_facts: no
+  become: yes
+  remote_user: "{{ user.name }}"
+  vars_files:
+  - credentials.yml
+  tasks:
+  - name: update apt cache
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
+  - name: upgrade all packages
+    apt:
+      name: "*"
+      state: latest
+  - name: autoremove dependencies
+    apt:
+      autoremove: yes
+  - name: upgrade OS
+    apt:
+      upgrade: dist
