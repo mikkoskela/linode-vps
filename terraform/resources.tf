@@ -1,6 +1,6 @@
 resource "linode_sshkey" "vps" {
     label = "vps"
-    ssh_key = chomp(file("./vps.pub"))
+    ssh_key = chomp(file(var.ssh_key_path))
 }
 
 resource "linode_instance" "vps" {
@@ -11,7 +11,6 @@ resource "linode_instance" "vps" {
     authorized_keys = [linode_sshkey.vps.ssh_key] # For root account
 
     #root_pass = ""
-    #private_ip = ""
 
     # TODO: Enable backups
 

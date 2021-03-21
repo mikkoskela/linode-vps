@@ -1,0 +1,21 @@
+---
+- name: set hostname
+  lineinfile:
+    path: /etc/hostname
+    regex: "^localhost"
+    line: "{{ hostname }}.local"
+    state: present
+- name: update hosts file
+  lineinfile:
+    path: /etc/hosts
+    line: "127.0.0.1 {{ hostname }}.local {{ hostname }}"
+    state: present
+    insertafter: '^127\.0\.0\.1 localhost'
+- name: set timezone
+  timezone:
+    name: Etc/UTC
+- name: enable logrotate
+  service:
+    name: logrotate
+    state: started
+    enabled: yes

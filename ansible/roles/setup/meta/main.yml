@@ -1,0 +1,7 @@
+galaxy_info:
+  author: Mikko Koskela
+  description: Basic system and security setup
+  min_ansible_version: 2.9
+
+dependencies: []
+  

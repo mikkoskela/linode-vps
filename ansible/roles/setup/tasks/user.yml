@@ -1,0 +1,44 @@
+---
+- name: create group
+  group:
+    name: "{{ user.name }}"
+    state: present
+- name: create user account
+  user:
+    name: "{{ user.name }}"
+    group: "{{ user.name }}"
+    groups:
+      - sudo
+    append: yes
+    shell: /bin/bash
+    state: present
+    create_home: yes
+    password: "{{ user.password | password_hash('sha512', user.salt) }}"
+    update_password: on_create
+- name: upload ssh key
+  authorized_key:
+    user: "{{ user.name }}"
+    state: present
+    manage_dir: yes
+    key: "{{lookup('file', public_key)}}"
+- name: add sudo rights
+  lineinfile:
+    path: /etc/sudoers
+    regex: "^{{ user.name }}"
+    line: "{{ user.name }} ALL=(ALL) NOPASSWD: ALL"
+    state: present
+    validate: "visudo -cf %s"
+- name: create necessary folders
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "700"
+  loop:
+    - "/home/{{ user.name }}/dev"
+    - "/home/{{ user.name }}/bin"
+- name: change root password
+  user:
+    name: root
+    password: "{{ root.password | password_hash('sha512', root.salt) }}"

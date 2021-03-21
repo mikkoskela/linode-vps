@@ -5,5 +5,5 @@ output "ip" {
 
 output "ssh" {
     description = "SSH command to connect to the instance."
-    value = "ssh -i ./vps root@${linode_instance.vps.ip_address}"
+    value = "ssh -i ~/.ssh/linode-vps root@${linode_instance.vps.ip_address}"
 }

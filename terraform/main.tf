@@ -8,5 +8,5 @@ terraform {
 }
 
 provider "linode" {
-    token = var.LINODE_TOKEN
+    token = var.linode_token
 }

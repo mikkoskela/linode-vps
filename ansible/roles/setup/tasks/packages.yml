@@ -1,0 +1,38 @@
+---
+- name: update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+- name: install basic software
+  apt:
+    name:
+    - sudo
+    - unattended-upgrades
+    - logrotate
+    - gnupg
+    - dnsutils
+    - diffutils
+    - fail2ban
+    - ufw
+    state: present
+- name: update all packages
+  apt:
+    name: "*"
+    state: latest
+- name: autoremove dependencies
+  apt:
+    autoremove: yes
+- name: configure automatic updates
+  template:
+    src: "{{ item }}"
+    dest: "/etc/apt/apt.conf.d/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+  - 20auto-upgrades
+  - 50unattended-upgrades
+#- name: remove unused packages
+#  apt:
+#    name:
+#    state: absent

@@ -1,0 +1,33 @@
+# Handle initial system and security setup.
+#
+# Note that this play runs as root, but login for root
+# is disabled during the playbook run. Running it again
+# requires switching `remote_user` to the user created
+# during the play.
+---
+- hosts: all
+  become: yes
+  remote_user: root
+  gather_facts: no
+  vars_files:
+    - credentials.yml
+  roles:
+    - role: setup
+      vars:
+        public_key: "~/.ssh/linode-vps.pub"
+  post_tasks:
+    - debug:
+        msg: Rebooting the machine
+    - name: reboot the machine
+      shell: "sleep 5 && reboot"
+      async: 1
+      poll: 0
+    - name: wait for startup
+      wait_for_connection:
+        connect_timeout: 15
+        sleep: 5
+        delay: 5
+        timeout: 180
+      remote_user: "{{ user.name }}"
+    - debug:
+        msg: "Setup done. Root SSH login has been disabled, use user {{ user.name }} instead."

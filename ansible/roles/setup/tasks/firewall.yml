@@ -1,0 +1,23 @@
+---
+- name: set firewall logging
+  ufw:
+    logging: on
+- name: allow ssh port
+  ufw:
+    rule: allow
+    port: 22
+    protocol: tcp
+- name: configure default traffic rules
+  ufw:
+    direction: "{{ item.direction }}"
+    default: "{{ item.policy }}"
+    state: enabled
+  with_items:
+  - { direction: outgoing, policy: allow }
+  - { direction: incoming, policy: deny }
+  notify: reload ufw
+- name: enable fail2ban
+  service:
+    name: fail2ban
+    state: started
+    enabled: yes

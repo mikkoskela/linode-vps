@@ -1,0 +1,7 @@
+---
+# tasks file for vps
+- include_tasks: packages.yml
+- include_tasks: user.yml
+- include_tasks: ssh.yml
+- include_tasks: firewall.yml
+- include_tasks: system.yml

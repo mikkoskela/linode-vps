@@ -1,18 +1,38 @@
-# Personal Linode VPS setup
+# Linode VPS setup
 
-Setup for personal Linode server.
+Create and configure a virtual machine on Linode.
 
 ## Usage
 ---
 
-**Configure**
-1. Rename `terraform.example.tfvars` to `terraform.tfvars`
-2. Fill in Linode token.
-3. Create SSH key pair: `ssh-keygen -t rsa -b 4096 -f vps -N "" -q`
+**1. Pre-requisities**
 
-**Use**
+- Linode account
+- Linode API TOKEN
+- Terraform v0.14.6+
+- Ansible v2.9.6+
+- GNU Make
+- jq
+- Python v3
+
+**2. Configure**
+
+1. Add Linode API token into `linode-credentials.sh`
+2. Add settings in `ansible/credentials.yml`
+
+**3. Create Linode resources**
+
+Run:
+
 ```sh
-terraform init
-terraform plan
-terraform apply
+make create
 ```
+
+**4. Basic security and system configuration**
+
+Run:
+
+```sh
+make setup
+```
+

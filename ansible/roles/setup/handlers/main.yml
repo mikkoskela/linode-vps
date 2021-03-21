@@ -1,0 +1,9 @@
+---
+# handlers file for vps
+- name: restart ssh
+  service:
+    name: ssh
+    state: restarted
+- name: reload ufw
+  ufw:
+    state: enabled
