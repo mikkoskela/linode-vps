@@ -3,7 +3,6 @@
 Create and configure a virtual machine on Linode.
 
 ## Usage
----
 
 **1. Requirements**
 
