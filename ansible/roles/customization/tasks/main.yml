@@ -32,3 +32,5 @@
 - include_tasks: hashicorp.yml
 - include_tasks: cloud.yml
 - include_tasks: coding.yml
+- include_tasks: docker.yml
+

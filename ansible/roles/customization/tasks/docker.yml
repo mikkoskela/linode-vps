@@ -1,0 +1,23 @@
+---
+- name: Install Docker tools
+  block:
+  - name: Add apt key
+    apt_key:
+      url: https://download.docker.com/linux/{{ ansible_os_family | lower }}/gpg
+      state: present
+  - name: Add repository
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_os_family | lower }} {{ ansible_distribution_release | lower }} stable"
+      state: present
+  - name: Install Docker
+    apt:
+      name:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+      state: present
+      update_cache: yes
+  - name: Enable Docker on startup
+    systemd:
+      name: docker
+      enabled: yes
