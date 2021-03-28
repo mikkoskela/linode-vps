@@ -1,0 +1,71 @@
+---
+- name: Install Python
+  apt:
+    name:
+      - python3
+      - python3-pip
+    state: present
+
+- name: Make Python 3 default
+  block:
+  - name: Remove symlink to Python 2
+    file:
+      path: /usr/bin/python
+      state: absent
+  - name: Create symlink for Python 3
+    file:
+      state: link
+      src: /usr/bin/python3
+      dest: /usr/bin/python
+      owner: root
+      group: root
+      mode: '777'
+
+- name: Install PHP
+  apt:
+    name: php
+    state: present
+
+- name: Install Java
+  apt:
+    name: default-jdk
+    state: present
+
+- name: Check Go installation
+  stat:
+    path: /usr/local/bin/go
+  register: stat_go
+
+- name: Install Go
+  block:
+    - name: Download Go installer
+      get_url:
+        url: "{{ go_download_url }}"
+        dest: /tmp/
+      register: go_download
+    - name: Unpack Go installer
+      unarchive:
+        src: "{{ go_download.dest }}"
+        dest: /opt/
+        remote_src: yes
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+    - name: Remove installer
+      file:
+        path: "{{ go_download.dest }}"
+        state: absent
+    - name: Create link to Go
+      file:
+        src: /opt/go/bin/go
+        dest: /usr/local/bin/go
+        state: link
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+    - name: Create link to Gofmt
+      file:
+        src: /opt/go/bin/gofmt
+        dest: /usr/local/bin/gofmt
+        state: link
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+  when: not stat_go.stat.exists

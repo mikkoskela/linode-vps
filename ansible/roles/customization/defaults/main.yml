@@ -4,3 +4,4 @@ packer_download_url: https://releases.hashicorp.com/packer/1.7.0/packer_1.7.0_li
 vagrant_download_url: https://releases.hashicorp.com/vagrant/2.2.14/vagrant_2.2.14_linux_amd64.zip
 gcloud_download_url: https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-311.0.0-linux-x86_64.tar.gz
 aws_download_url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+go_download_url: https://golang.org/dl/go1.15.1.linux-amd64.tar.gz
