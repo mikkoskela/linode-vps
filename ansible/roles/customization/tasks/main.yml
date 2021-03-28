@@ -30,3 +30,4 @@
     state: present
 
 - include_tasks: hashicorp.yml
+- include_tasks: cloud.yml

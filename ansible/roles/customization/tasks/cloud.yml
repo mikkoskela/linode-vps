@@ -1,0 +1,76 @@
+---
+- name: Check Ggloud SDK existence
+  stat:
+    path: "/home/{{ user.name }}/bin/google-cloud-sdk/bin/gcloud"
+  register: stat_gcloud
+- name: Install Ggloud SDK
+  block:
+    - name: Download Ggloud SDK
+      get_url:
+        url: "{{ gcloud_download_url }}"
+        dest: /tmp/
+      register: gcloud_download
+    - name: Extract Ggloud SDK
+      unarchive:
+        src: "{{ gcloud_download.dest }}"
+        dest: "/home/{{ user.name }}/bin"
+        remote_src: yes
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+    - name: Remove Ggloud archive
+      file:
+        path: "{{ gcloud_download.dest }}"
+        state: absent
+    - name: Create link to Gcloud
+      file:
+        src: "/home/{{ user.name }}/bin/google-cloud-sdk/bin/gcloud"
+        dest: /usr/local/bin/gcloud
+        state: link
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+    - name: Create link to bq
+      file:
+        src: "/home/{{ user.name }}/bin/google-cloud-sdk/bin/bq"
+        dest: /usr/local/bin/bq
+        state: link
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+    - name: Create link to gsutil
+      file:
+        src: "/home/{{ user.name }}/bin/google-cloud-sdk/bin/gsutil"
+        dest: /usr/local/bin/gsutil
+        state: link
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+  when: not stat_gcloud.stat.exists
+
+- name: Check AWS CLI existence
+  stat:
+    path: /usr/local/bin/aws
+  register: stat_aws
+- name: Install AWS CLI
+  block:
+  - name: Download AWS CLI
+    get_url:
+      url: "{{ aws_download_url }}"
+      dest: /tmp/
+      owner: "{{ user.name }}"
+      group: "{{ user.name }}"
+    register: aws_download
+  - name: Extract AWS CLI
+    unarchive:
+      src: "{{ aws_download.dest }}"
+      dest: /tmp/
+      remote_src: yes
+      owner: "{{ user.name }}"
+      group: "{{ user.name }}"
+  - name: Install AWS CLI
+    command: /tmp/aws/install
+  - name: Remove AWS installer files
+    file:
+      path: "{{ item }}"
+      state: absent
+    with_items:
+      - "{{ aws_download.dest }}"
+      - /tmp/aws
+  when: not stat_aws.stat.exists
