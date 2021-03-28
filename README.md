@@ -41,3 +41,12 @@ Run:
 ```sh
 make customize
 ```
+
+**6. Destroy resources**
+
+Run:
+
+```sh
+make destroy
+```
+
