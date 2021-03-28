@@ -10,7 +10,7 @@
     path: /etc/hosts
     line: "127.0.0.1 {{ hostname }}.local {{ hostname }}"
     state: present
-    insertafter: '^127\.0\.0\.1 localhost'
+    insertafter: '^127\.0\.0\.1\slocalhost'
 - name: set timezone
   timezone:
     name: Etc/UTC
