@@ -9,6 +9,7 @@
     name:
     - whois
     - nmap
+    - build-essential
     - zsh
     - ansible
     - shellcheck
@@ -25,4 +26,5 @@
     - wget
     - openssl
     - openvpn
+    - ranger
     state: present
