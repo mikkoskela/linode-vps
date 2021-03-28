@@ -35,8 +35,10 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "700"
+    recurse: yes
   loop:
-    - "/home/{{ user.name }}/dev"
+    - "/home/{{ user.name }}/dev/repos"
+    - "/home/{{ user.name }}/dev/scratch"
     - "/home/{{ user.name }}/bin"
 - name: change root password
   user:
