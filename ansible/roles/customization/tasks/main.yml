@@ -28,3 +28,5 @@
     - openvpn
     - ranger
     state: present
+
+- include_tasks: hashicorp.yml

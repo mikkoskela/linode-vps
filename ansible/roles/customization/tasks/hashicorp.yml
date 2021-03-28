@@ -1,0 +1,93 @@
+---
+- name: Check Terraform existance
+  stat:
+    path: "/home/{{ user.name }}/bin/terraform"
+  register: stat_terraform
+- name: Install Terraform
+  block:
+  - name: Download Terraform
+    get_url:
+      url: "{{ terraform_download_url }}"
+      dest: /tmp/
+    register: terraform_download
+  - name: Extract Terraform binary
+    unarchive:
+      src: "{{ terraform_download.dest }}"
+      dest: "/home/{{ user.name }}/bin/"
+      remote_src: yes
+      owner: "{{ user.name }}"
+      group: "{{ user.name }}"
+  - name: Create link to Terraform
+    file:
+      src: "/home/{{ user.name }}/bin/terraform"
+      dest: /usr/local/bin/terraform
+      state: link
+      owner: "{{ user.name }}"
+      group: "{{ user.name }}"
+  - name: Delete Terraform zip
+    file:
+      path: "{{ terraform_download.dest }}"
+      state: absent
+  when: not stat_terraform.stat.exists
+
+- name: Check Packer existance
+  stat:
+    path: "/home/{{ user.name }}/bin/packer"
+  register: stat_packer
+- name: Install Packer
+  block:
+  - name: Download Packer
+    get_url:
+      url: "{{ packer_download_url }}"
+      dest: /tmp/
+    register: packer_download
+  - name: Extract Packer binary
+    unarchive:
+      src: "{{ packer_download.dest }}"
+      dest: "/home/{{ user.name }}/bin/"
+      remote_src: yes
+      owner: "{{ user.name }}"
+      group: "{{ user.name }}"
+  - name: Create link to Packer
+    file:
+      src: "/home/{{ user.name }}/bin/packer"
+      dest: /usr/local/bin/packer
+      state: link
+      owner: "{{ user.name }}"
+      group: "{{ user.name }}"
+  - name: Delete Packer zip
+    file:
+      path: "{{ packer_download.dest }}"
+      state: absent
+  when: not stat_packer.stat.exists
+
+- name: Check Vagrant existance
+  stat:
+    path: "/home/{{ user.name }}/bin/vagrant"
+  register: stat_vagrant
+- name: Install Vagrant
+  block:
+  - name: Download Vagrant
+    get_url:
+      url: "{{ vagrant_download_url }}"
+      dest: /tmp/
+    register: vagrant_download
+  - name: Extract Vagrant binary
+    unarchive:
+      src: "{{ vagrant_download.dest }}"
+      dest: "/home/{{ user.name }}/bin/"
+      remote_src: yes
+      owner: "{{ user.name }}"
+      group: "{{ user.name }}"
+  - name: Create link to Vagrant
+    file:
+      src: "/home/{{ user.name }}/bin/vagrant"
+      dest: /usr/local/bin/vagrant
+      state: link
+      owner: "{{ user.name }}"
+      group: "{{ user.name }}"
+  - name: Delete Vagrant zip
+    file:
+      path: "{{ vagrant_download.dest }}"
+      state: absent
+  when: not stat_vagrant.stat.exists

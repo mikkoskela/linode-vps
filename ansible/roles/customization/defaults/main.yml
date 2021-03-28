@@ -1,0 +1,4 @@
+---
+terraform_download_url: https://releases.hashicorp.com/terraform/0.14.8/terraform_0.14.8_linux_amd64.zip
+packer_download_url: https://releases.hashicorp.com/packer/1.7.0/packer_1.7.0_linux_amd64.zip
+vagrant_download_url: https://releases.hashicorp.com/vagrant/2.2.14/vagrant_2.2.14_linux_amd64.zip
