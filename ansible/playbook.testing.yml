@@ -1,0 +1,14 @@
+---
+# Basic playbook to test Ansible commands
+- hosts: all
+  gather_facts: yes
+  become: yes
+  remote_user: "{{ user.name }}"
+  vars_files:
+  - credentials.yml
+  tasks:
+  - name: gather package facts
+    package_facts:
+      manager: auto
+  - debug:
+      var: ansible_facts.packages
