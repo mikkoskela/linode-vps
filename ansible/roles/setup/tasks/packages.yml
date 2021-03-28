@@ -33,8 +33,8 @@
     group: root
     mode: 0644
   with_items:
-  - 20auto-upgrades
-  - 50unattended-upgrades
+    - 20auto-upgrades
+    - 50unattended-upgrades
 #- name: remove unused packages
 #  apt:
 #    name:

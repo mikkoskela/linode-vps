@@ -13,8 +13,8 @@
     default: "{{ item.policy }}"
     state: enabled
   with_items:
-  - { direction: outgoing, policy: allow }
-  - { direction: incoming, policy: deny }
+    - { direction: outgoing, policy: allow }
+    - { direction: incoming, policy: deny }
   notify: reload ufw
 - name: enable fail2ban
   service:

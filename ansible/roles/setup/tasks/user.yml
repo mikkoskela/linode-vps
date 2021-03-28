@@ -36,7 +36,7 @@
     group: "{{ user.name }}"
     mode: "700"
     recurse: yes
-  loop:
+  with_items:
     - "/home/{{ user.name }}/dev/repos"
     - "/home/{{ user.name }}/dev/scratch"
     - "/home/{{ user.name }}/bin"
