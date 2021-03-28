@@ -1,5 +1,8 @@
 ---
 # tasks file for customization
+- name: Gather package facts
+  package_facts:
+    manager: auto
 - name: update apt cache
   apt:
     update_cache: yes
@@ -34,3 +37,88 @@
 - include_tasks: coding.yml
 - include_tasks: docker.yml
 
+- name: Install bat
+  block:
+  - name: Download bat
+    get_url:
+      url: "{{ bat_download_url }}"
+      dest: /tmp/bat.deb
+  - name: Install bat
+    apt:
+      deb: /tmp/bat.deb
+      state: present
+  - name: Remove bat installer
+    file:
+      path: /tmp/bat.deb
+      state: absent
+  when: "'bat' not in ansible_facts.packages"
+
+- name: Install lsd
+  block:
+  - name: Download lsd
+    get_url:
+      url: "{{ lsd_download_url }}"
+      dest: /tmp/lsd.deb
+  - name: Install lsd
+    apt:
+      deb: /tmp/lsd.deb
+      state: present
+  - name: Remove lsd installer
+    file:
+      path: /tmp/lsd.deb
+      state: absent
+  when: "'lsd' not in ansible_facts.packages"
+
+- name: Check Lazygit existence
+  stat:
+    path: "/home/{{ user.name }}/bin/lazygit"
+  register: stat_lazygit
+- name: Install Lazygit
+  block:
+  - name: Download Lazygit
+    get_url:
+      url: "{{ lazygit_download_url }}"
+      dest: /tmp/
+      owner: "{{ user.name }}"
+      group: "{{ user.name }}"
+    register: lazygit_download
+  - name: Extract Lazygit installer
+    unarchive:
+      src: "{{ lazygit_download.dest }}"
+      dest: "/home/{{ user.name }}/bin"
+      remote_src: yes
+      owner: "{{ user.name }}"
+      group: "{{ user.name }}"
+  - name: Remove Lazygit installer and other files
+    file:
+      path: "{{ item }}"
+      state: absent
+    with_items:
+      - "{{ lazygit_download.dest }}"
+      - "/home/{{ user.name }}/bin/LICENSE"
+      - "/home/{{ user.name }}/bin/README.md"
+  - name: Create symlink for Lazygit
+    file:
+      state: link
+      src: "/home/{{ user.name }}/bin/lazygit"
+      dest: "/usr/local/bin/lazygit"
+      owner: "{{ user.name }}"
+      group: "{{ user.name }}"
+  when: not stat_lazygit.stat.exists
+
+- name: Install Step CLI
+  block:
+  - name: Download step cli
+    get_url:
+      url: "{{ step_cli_download_url }}"
+      dest: /tmp/
+    register: step_cli_download
+  - name: Install step cli
+    apt:
+      deb: "{{ step_cli_download.dest }}"
+      state: present
+  - name: Remove step installer
+    file:
+      path: "{{ step_cli_download.dest }}"
+      state: absent
+  when: "'step-cli' not in ansible_facts.packages"
