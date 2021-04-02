@@ -30,6 +30,7 @@
     - openssl
     - openvpn
     - ranger
+    - cloc
     state: present
 
 - include_tasks: hashicorp.yml
