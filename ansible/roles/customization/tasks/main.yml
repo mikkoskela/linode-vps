@@ -10,24 +10,12 @@
 - name: install base software
   apt:
     name:
-    - whois
-    - nmap
-    - build-essential
     - zsh
     - ansible
     - shellcheck
-    - tree
-    - htop
-    - tmux
     - ripgrep
     - fd-find
     - jq
-    - unzip
-    - vim
-    - git
-    - curl
-    - wget
-    - openssl
     - openvpn
     - ranger
     - cloc

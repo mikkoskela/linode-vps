@@ -17,6 +17,20 @@
     - software-properties-common
     - apt-transport-https
     - ca-certificates
+    - whois
+    - nmap
+    - build-essential
+    - tree
+    - htop
+    - tmux
+    - zip
+    - unzip
+    - vim
+    - git
+    - curl
+    - wget
+    - openssl
+    - sysstat
     state: present
 - name: update all packages
   apt:
