@@ -5,7 +5,7 @@ vagrant_download_url: https://releases.hashicorp.com/vagrant/2.2.14/vagrant_2.2.
 gcloud_download_url: https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-311.0.0-linux-x86_64.tar.gz
 aws_download_url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
 step_cli_download_url: https://github.com/smallstep/cli/releases/download/v0.15.12/step-cli_0.15.12_amd64.deb
-go_download_url: https://golang.org/dl/go1.15.1.linux-amd64.tar.gz
+go_download_url: https://golang.org/dl/go1.16.6.linux-amd64.tar.gz
 bat_download_url: https://github.com/sharkdp/bat/releases/download/v0.15.4/bat_0.15.4_amd64.deb
 lsd_download_url: https://github.com/Peltoche/lsd/releases/download/0.17.0/lsd_0.17.0_amd64.deb
 lazygit_download_url: https://github.com/jesseduffield/lazygit/releases/download/v0.26.1/lazygit_0.26.1_Linux_x86_64.tar.gz
