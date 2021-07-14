@@ -21,15 +21,59 @@
       group: root
       mode: '777'
 
+- name: Check Pyenv installation
+  stat:
+    path: "/home/{{ user.name }}/.pyenv"
+  register: stat_pyenv
+
+- name: Install pyenv
+  shell: curl -L {{ pyenv_download_url }} | bash
+  become: no
+  when: not stat_pyenv.stat.exists
+
+- name: Check NVM installation
+  stat:
+    path: "/home/{{ user.name }}/.nvm"
+  register: stat_nvm
+
+- name: Install nvm
+  shell: curl -o- {{ nvm_download_url }} | bash
+  become: no
+  when: not stat_nvm.stat.exists
+
+- name: Check SDKman installation
+  stat:
+    path: "/home/{{ user.name }}/.sdkman"
+  register: stat_sdkman
+
+- name: Install SDKman
+  shell: curl -s {{ sdkman_download_url }} | bash
+  become: no
+  when: not stat_sdkman.stat.exists
+
+- name: Check Leiningen existence
+  stat:
+    path: "/home/{{ user.name }}/bin/lein"
+  register: stat_lein
+
+- name: Install Leiningen
+  get_url:
+    url: "{{ leiningen_download_url }}"
+    dest: "/home/{{ user.name }}/bin"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "760"
+  when: not stat_lein.stat.exists
+
 - name: Install PHP
   apt:
     name: php
     state: present
 
-- name: Install Java
-  apt:
-    name: default-jdk
-    state: present
+#- name: Install Java
+#  apt:
+#    name: default-jdk
+#    state: present
 
 - name: Check Go installation
   stat:
