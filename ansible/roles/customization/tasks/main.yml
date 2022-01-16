@@ -19,6 +19,7 @@
     - openvpn
     - ranger
     - cloc
+    - direnv
     state: present
 
 - include_tasks: hashicorp.yml
