@@ -4,6 +4,16 @@ export
 SHELL:=/bin/bash
 TOKEN:=source ./linode-credentials.sh &&
 
+VENV = source venv/bin/activate &&
+
+default: deps
+
+venv:
+	python3 -m venv venv
+
+deps: venv
+	$(VENV) pip install --requirement requirements.txt
+
 key:
 	@echo "=== Creating a private key ==="
 	@test -e ~/.ssh/linode-vps || ssh-keygen -t rsa -b 4096 -f ~/.ssh/linode-vps -N "" -q
